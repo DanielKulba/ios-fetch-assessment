@@ -9,9 +9,13 @@ import SwiftUI
 
 @main
 struct fetch_assessmentApp: App {
-    var body: some Scene {
-        WindowGroup {
-            ContentView()
+    var network = Network()
+
+        var body: some Scene {
+            WindowGroup {
+                DessertsView()
+                    .environmentObject(network)
+            }
         }
-    }
 }
+
