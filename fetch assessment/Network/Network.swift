@@ -7,9 +7,7 @@
 
 import SwiftUI
 
-class Network: ObservableObject{
-    
-    
+class DessertListProvider: ObservableObject{
     @Published var desserts:[Meal]=[]
     
     func getDesserts() {
@@ -32,7 +30,6 @@ class Network: ObservableObject{
                        do {
                            let decodedDesserts = try JSONDecoder().decode(Meals.self, from: data)
                            
-                           //TODO: check for null values in array
                            self.desserts = decodedDesserts.meals
                        } catch let error {
                            print("Error decoding: ", error)
@@ -40,12 +37,15 @@ class Network: ObservableObject{
                    }
                }
            }
-
            dataTask.resume()
        }
+    }
+
+class DessertDetailsProvider: ObservableObject{
+    @Published var dessertDetails:DessertDetails?
     
     func getDessertDetails(idMeal:String){
-        guard let url = URL(string: "https://themealdb.com/api/json/v1/1/filter.php?c=Dessert") else { fatalError("Missing URL") }
+        guard let url = URL(string: "https://themealdb.com/api/json/v1/1/lookup.php?i=\(idMeal)") else { fatalError("Missing URL") }
 
         let urlRequest = URLRequest(url: url)
 
@@ -62,22 +62,16 @@ class Network: ObservableObject{
                 
                 DispatchQueue.main.async {
                     do {
-                        let decodedDesserts = try JSONDecoder().decode(Meals.self, from: data)
+                        let decodedDesserts = try JSONDecoder().decode(DessertResponse.self, from: data)
                         
-                        //TODO: check for null values in array
-                        self.desserts = decodedDesserts.meals
+                        self.dessertDetails = decodedDesserts.meals[0]
                     } catch let error {
                         print("Error decoding: ", error)
                     }
                 }
             }
         }
-
         dataTask.resume()
-        
-        
-        
     }
-    
-    
 }
+

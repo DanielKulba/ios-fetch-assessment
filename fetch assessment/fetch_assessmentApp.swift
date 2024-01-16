@@ -9,7 +9,7 @@ import SwiftUI
 
 @main
 struct fetch_assessmentApp: App {
-    var network = Network()
+    var network = DessertListProvider()
 
         var body: some Scene {
             WindowGroup {

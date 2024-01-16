@@ -6,8 +6,4 @@
 //
 
 // unsure if needed
-import Foundation
 
-struct Meals: Decodable{
-    var meals: [Meal]
-}

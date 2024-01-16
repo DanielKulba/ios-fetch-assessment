@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct DessertsView: View {
-    @EnvironmentObject var network: Network
+    @EnvironmentObject var network: DessertListProvider
     
     var body: some View {
         NavigationView{
@@ -25,7 +25,6 @@ struct DessertsView: View {
             .navigationTitle("Desserts")
             .onAppear{
                 network.getDesserts()
-                print(network.desserts)
             }
         }
     }
@@ -33,7 +32,7 @@ struct DessertsView: View {
 
 #Preview {
     DessertsView()
-        .environmentObject(Network())
+        .environmentObject(DessertListProvider())
 }
 
 
